@@ -1,0 +1,42 @@
+Bailey Kane
+March 3, 2017
+CS 3650 - Computer Systems
+Prof. Nat Tuck
+
+                        HW07 - Specialized Allocator
+
+
+I ran these tests on the login.ccs.neu.edu Linux server.
+
+STATS:
+(cpu,                                      ram,  os)
+Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz, 64GB, Linux
+
+TABLE:
+(allocator, chunk size, time)
+hw06        1k          N/A (never completed after waiting hours)
+hw06        64k         3.908s
+hw06        1024k       0.222s
+opt         1k          N/A (never completed after waiting hours)
+opt         64k         0.395s
+opt         1024k       0.320s
+sys         N/A         0.353s
+
+    At least two paragraphs explaining how and why varying the chunk size affects
+performance of the allocators.
+
+REPORT:
+    In this assignment we varied two factors: 1. the chunk size being used by
+the allocators, and 2. the allocation strategy and implementation. The chunk size
+used by the allocators has a measured effect on the overall performance of the
+allocators, with the 1024k-byte chunk casuing a nearly 20x increase in performance
+for the hw06_mem.c allocator, and an approximately 20% increase in performance
+for the opt_mem.c allocator. The primary cause for this increase in speed is
+reduction of system calls through calling mmap and munmap less often and instead
+using the free list of cells.
+    The system calls take a longer time to process because the system must
+access the kernel. It is much more time-efficient to use the larger chunks and
+repeatedly access these cells instead of using mmap to create new chunks. This
+can lead to unnecessary allocation of large amounts of memory when only a smaller
+amount is required for the request. However, as the cells are filled up, freed,
+and coalesced together, this problem is mitigated.
