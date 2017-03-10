@@ -1,0 +1,44 @@
+echo test script!
+echo test ls
+ls
+echo
+
+echo test semicolon
+echo before semicolon; echo after semicolon
+echo
+
+echo test background $(sleep 3 &)
+sleep 3 &
+echo background done
+echo
+
+echo test input redirection (<)
+sort < tests/sample.txt
+echo input redirection done
+echo
+
+echo test output redirection (>)
+mkdir -p tmp
+sort tests/sample.txt > tmp/sorted2.txt
+cat tmp/sorted2.txt
+echo output redirection done
+echo
+
+echo test piping (|)
+sort tests/sample.txt | tail -n 2
+echo piping done
+echo
+
+echo test and
+true && echo true
+false && echo false
+echo and done
+echo
+
+echo test or
+true || echo true
+false || echo false
+echo or done
+echo
+
+echo testing done!
