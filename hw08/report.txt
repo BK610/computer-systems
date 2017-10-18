@@ -1,0 +1,49 @@
+Bailey Kane                                                          hw08 Report
+
+
+
+Testing Results:
+
+Small Number: 1004141254233400
+Big Number:   1004141255234233400
+
+Threads    Number    Time(s)    Repititions    Parallel Speedup
+1          Small     29.645     15             N/A
+1          Big       22.380     15             N/A
+4          Small     
+4          Big       
+16         Small     
+16         Big       
+
+
+
+Discussion:
+
+    I was unable to successfully get multi-threading to work for this assignment.
+The data for single-thread performance is accurate. For all testing, I used the
+small and big numbers indicated above, which are roughly a factor of 1000x off
+from each other - a sizeable difference. These numbers were factored using 1
+thread, 15 times for the small and 15 times for the big. I used the `time` Bash
+program to measure time performance. I performed the testing manually and simply
+recorded the "real" time taken after each round of factoring, and averaged these
+results in the table here. This data can also be found in graph.phg.
+    Multi-threading should dramatically increase the performance of the program.
+With big numbers especially, because the time taken to factor a single number is
+so large, allowing separate threads to work on factoring the numbers in parallel
+allows for a much more time-efficient system. The small amount of time spent
+accessing the queues, and locking / unlocking the mutexes, is insignificant in
+comparison to the time spent on factorization, which is what the additional
+threads are helpful for. FOr the smaller numbers, I suspect the performance
+increase would be much smaller, or even negative. This is because it may take
+more time to create and use the mutexes, consdiering that they, and the queues,
+must be accesssed for each number. In either case, the magnitude of the increase
+or decrease in performance would be greater while using 16 threads than 4.
+    I am not sure as to why my implementation of threading for this assignment
+is not yet successful. My best guess is that the primary problem lies in
+signaling to worker threads when to stop. This assignment has been a struggle
+for me, though I welcome the challenge. Also to be noted is:
+1. Single-thread operation is successful, performance is normal.
+2. Running with additional threads on very small numbers (ex. 2 threads, start
+     at 100, count 100) sometimes completes successfully, sometimes stops in
+     a segmentation fault, sometimes hangs indefinitely. As the numbers go
+     higher, the certainty with which a segmentation fault occurs goes up.
